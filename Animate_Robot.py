@@ -1,4 +1,5 @@
 import numpy as np
+
 from numpy import sin, cos, pi, sqrt
 from numpy import arcsin as asin
 from numpy import arccos as acos
@@ -10,14 +11,13 @@ from matplotlib.animation import FuncAnimation
 
 
 def fk(l1, l2, l3, th1, th2):
+
     x2 = l2 * cos(th2) - (l1 + l3) * cos(th1)
     y2 = l2 * sin(th2) + (l1 + l3) * sin(th1)
-
     x1 = -l1 * cos(th1)
     y1 = l1 * sin(th1)
 
     return x1, y1, x2, y2
-
 
 def fk_frame(l1, l2, l3, l4, l5, l6, l7, th1, th2, x1, y1, x2, y2):
     x3 = - l4 * cos(th2) - l1 * cos(th1)
