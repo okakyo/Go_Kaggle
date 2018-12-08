@@ -32,7 +32,7 @@ def calculate_arms():
     graph.set_linestyle('-')
     graph.set_linewidth(5)
     graph.set_marker('o')
-    graph.set_markerfacecolor('g')
+    graph.set_markerfacecolor('r')
     graph.set_markeredgecolor('g')
     graph.set_markersize(15)
 
@@ -56,9 +56,6 @@ def update_th3(slider_val):
     th[2] = np.radians([slider_val])
     calculate_arms()
     fig.canvas.draw_idle()
-
-
-
 
 def main():
     # スライダーの表示位置
@@ -85,7 +82,7 @@ if __name__ == '__main__':
     L = [0.5, 0.5, 0.5]
 
     # 第1, 2の関節角度
-    th = np.radians([90, 0, 0])
+    th = np.radians([0, 0, 0])
 
     # 順運動学の計算
     p = fk(L, th)

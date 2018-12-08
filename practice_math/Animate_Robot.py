@@ -1,5 +1,5 @@
 import numpy as np
-
+import sys
 from numpy import sin, cos, pi, sqrt
 from numpy import arcsin as asin
 from numpy import arccos as acos
@@ -9,11 +9,12 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from matplotlib.animation import FuncAnimation
 
+# 入力しないといけない値が多すぎる！
+# リストを入力値として、関数内で個々の変数を定義すべき！
 
 def fk(l1, l2, l3, th1, th2):
-
-    x2 = l2 * cos(th2) - (l1 + l3) * cos(th1)
-    y2 = l2 * sin(th2) + (l1 + l3) * sin(th1)
+    x2 = l2*cos(th2) - (l1 + l3) *cos(th1)
+    y2 = l2*sin(th2) + (l1 + l3) *sin(th1)
     x1 = -l1 * cos(th1)
     y1 = l1 * sin(th1)
 
@@ -29,11 +30,11 @@ def fk_frame(l1, l2, l3, l4, l5, l6, l7, th1, th2, x1, y1, x2, y2):
     x5 = (l2 + l6) * cos(th2) - (l1 + l3) * cos(th1) + l7 * sin(th2)
     y5 = (l2 + l6) * sin(th2) + (l1 + l3) * sin(th1) - l7 * cos(th2)
 
-    x_f1 = [0, -l4 * cos(th2), x3, x1]
-    y_f1 = [0, -l4 * sin(th2), y3, y1]
+    x_f1 = [0, -l4*cos(th2), x3, x1]
+    y_f1 = [0, -l4*sin(th2), y3, y1]
 
-    x_f2 = [x3, x1 - l5 * sin(th2), x2]
-    y_f2 = [y3, y1 + l5 * cos(th2), y2]
+    x_f2 = [x3, x1-l5*sin(th2), x2]
+    y_f2 = [y3, y1+l5*cos(th2), y2]
 
     x_l = [x2, x4, x5, x2]
     y_l = [y2, y4, y5, y2]
@@ -61,7 +62,7 @@ y = np.append(y0, y1)
 ite_len = len(x)
 
 # 90 < th1
-th1 = asin((l2 * sin(2 * atan((2 * l2 * y - sqrt(
+th1 = asin((l2*sin(2*atan((2* l2 * y - sqrt(
     -l1 ** 4 - 4 * l1 ** 3 * l3 + 2 * l1 ** 2 * l2 ** 2 - 6 * l1 ** 2 * l3 ** 2 + 2 * l1 ** 2 * x ** 2 + 2 * l1 ** 2 * y ** 2 + 4 * l1 * l2 ** 2 * l3 - 4 * l1 * l3 ** 3 + 4 * l1 * l3 * x ** 2 + 4 * l1 * l3 * y ** 2 - l2 ** 4 + 2 * l2 ** 2 * l3 ** 2 + 2 * l2 ** 2 * x ** 2 + 2 * l2 ** 2 * y ** 2 - l3 ** 4 + 2 * l3 ** 2 * x ** 2 + 2 * l3 ** 2 * y ** 2 - x ** 4 - 2 * x ** 2 * y ** 2 - y ** 4)) / (
                               -l1 ** 2 - 2 * l1 * l3 + l2 ** 2 + 2 * l2 * x - l3 ** 2 + x ** 2 + y ** 2))) - y) / (
            l1 + l3)) + pi
@@ -72,9 +73,10 @@ th2 = 2 * atan((2 * l2 * y - sqrt(
 print(th2)
 
 
-# 0 < 90 < th1
+#  0 < 90 < th1
 # th1 = -asin((l2*sin(2*atan((2*l2*y - sqrt(-l1**4 - 4*l1**3*l3 + 2*l1**2*l2**2 - 6*l1**2*l3**2 + 2*l1**2*x**2 + 2*l1**2*y**2 + 4*l1*l2**2*l3 - 4*l1*l3**3 + 4*l1*l3*x**2 + 4*l1*l3*y**2 - l2**4 + 2*l2**2*l3**2 + 2*l2**2*x**2 + 2*l2**2*y**2 - l3**4 + 2*l3**2*x**2 + 2*l3**2*y**2 - x**4 - 2*x**2*y**2 - y**4))/(-l1**2 - 2*l1*l3 + l2**2 + 2*l2*x - l3**2 + x**2 + y**2))) - y)/(l1 + l3))
 # th2 = 2*atan((2*l2*y - sqrt(-l1**4 - 4*l1**3*l3 + 2*l1**2*l2**2 - 6*l1**2*l3**2 + 2*l1**2*x**2 + 2*l1**2*y**2 + 4*l1*l2**2*l3 - 4*l1*l3**3 + 4*l1*l3*x**2 + 4*l1*l3*y**2 - l2**4 + 2*l2**2*l3**2 + 2*l2**2*x**2 + 2*l2**2*y**2 - l3**4 + 2*l3**2*x**2 + 2*l3**2*y**2 - x**4 - 2*x**2*y**2 - y**4))/(-l1**2 - 2*l1*l3 + l2**2 + 2*l2*x - l3**2 + x**2 + y**2))
+
 
 def two_link(th1, th2):
     l1, l2, l3, l4, l5, l6, l7 = 0.18, 0.16, 0.0, 0.05, 0.03, 0.07, 0.07
@@ -92,6 +94,8 @@ def two_link(th1, th2):
 
 
 xl, yl, x_f1l, y_f1l, x_f2l, y_f2l, x_ll, y_ll = [], [], [], [], [], [], [], []
+#初期化している。
+
 
 for t1, t2 in zip(th1, th2):
     x, y, x_f1, y_f1, x_f2, y_f2, x_l, y_l = two_link(t1, t2)
