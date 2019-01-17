@@ -1,0 +1,6 @@
+k,s=map(int,input().split())
+ans=0
+for i in range(k):
+    for j in range(k):
+        if (s-i-j>=0 and s-i-j<=k):ans+=1
+print(ans)
