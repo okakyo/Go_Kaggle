@@ -1,0 +1,11 @@
+import pandas as pd
+import requests
+from bs4 import BeautifulSoup
+import json
+
+url='https://qiita.com/keigohtr/items/161c9fb1584758ae3e35'
+data=requests.get(url)
+soup=BeautifulSoup(data.content)
+
+
+print(soup)
