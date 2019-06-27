@@ -1,12 +1,8 @@
-import socket
-
-target_host="127.0.0.1"
-target_port=80
-
-client=socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
-
-
-client.sendto(b"AABBCC",(target_host,target_port))
-
-response,addr=client.recvform(4096)
-print(response)
+culc="4 ? 4 ? 4 = -3"
+qu=culc.split('=')[0]
+ans=culc.split('=')[1]
+print(type(qu))
+after=qu.replace('?','+',1).replace('?','-',1)
+print(after)
+print(eval(after))
+print(eval(after)==int(ans))

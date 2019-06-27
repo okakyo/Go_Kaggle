@@ -1,20 +1,49 @@
-driver_path='C:\\Users\Kyohei Oka\Downloads\chromedriver.exe'
-URL='https://www.anzen.mofa.go.jp/info/pcareahazardinfo_17.html'
-from selenium import webdriver
-from bs4 import BeautifulSoup
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import  By
-import re
-option=webdriver.ChromeOptions()
-option.add_argument('--headless')
-driver=webdriver.Chrome(driver_path,options=option)
-driver.get(URL)
-data=driver.page_source
-soup=BeautifulSoup(data,'lxml')
-data=soup.find_all('a',href=re.compile("pcinfectionspothazardinfo"))
-for name in data:
-    print(name.href)
-driver.close()
-driver.quit()
+import requests
+from dotenv import load_dotenv
+import os
+import random,json
+import time
+SetCulc="+-*/"
+postURL="	https://apiv2.twitcasting.tv/internships/2019/games/"
+load_dotenv()
+
+headers={
+    "content-type": "application/json",
+    'Authorization':'Bearer {}'.format(os.environ.get('AUTH_TOKEN'))
+}
+while(True):
+   
+    for i in range(1,4):
+        getUrl="https://apiv2.twitcasting.tv/internships/2019/games?level={}".format(i)
+        data=requests.get(getUrl,headers=headers).json()
+        
+        ansID=data['id']
+        question=data['question']
+        qu,ansQ=question.split('=')
+        
+        ansQ=int(ansQ)
+        
+        while(True):
+            ans=""
+            p=qu
+            for _ in range(2*i):
+                x=random.choice(SetCulc)
+                ans+=x
+                p=p.replace('?',x,1)
+            if(eval(p)==ansQ):
+                break
+       
+        comment=requests.post(postURL+ansID,headers=headers,json={'answer':ans})
+        print(comment.text)
+        continue
+    print('終了します.')
+    time.sleep(5)
+        
+
+
+
+    
+
+
+
 

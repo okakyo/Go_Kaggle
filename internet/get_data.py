@@ -1,16 +1,16 @@
-import sys,requests,json
-from bs4 import BeautifulSoup
+import subprocess
 
-countries=['JP','KR','FR','MX','IR','US','IN']
-BaseUrl='https://www.travel-advisory.info/api'
-
-url=requests.get(BaseUrl)
-soup=BeautifulSoup(url.content,"lxml")
-
-# the data you get is in .txt. You need to change it in .json
-data=soup.find("p")
-data=json.loads(data.text)['data']
-
-for country in countries:
-    datum=data[country]['advisory']
-    print(data[country]['name'],datum['score'])
+data=subprocess.check_output(['netsh','wlan','show','profiles']).decode('utf-8'
+                                ,errors="backslashreplace").split("\n")
+profiles=[i.split(":")[1][1:] for i in data if "All User Profile" in i]
+for i in profiles:
+    try:
+        result=subprocess.check_output(['netsh','wlan','show','profiles'].decode('utf-8')
+                                ,errors="backslashreplace".split("\n"))
+        [i.split(":")[1][1:] for i in result if "Key Content" in i]
+        try:
+            print('{:<30}|{:<}'.format(i,result[0]))
+        except IndexError:
+            print('{:<30}|{:<}'.format(i,""))
+    except subprocess.CalledProcessError:
+        print('{:<30}|{:<}'.format(i,"Encoding Error! "))
