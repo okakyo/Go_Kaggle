@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 
 class PID:
-    def __init__(self,ideal=0.5,kp=0.3,ki=0.1,kd=0.02,setTime=1.0):
+    def __init__(self,ideal=1,kp=0.3,ki=0.1,kd=0.02,setTime=1.0):
         
         self.kp=kp
         self.ki=ki
@@ -16,7 +16,7 @@ class PID:
         self.sum=0
     
     def different(self,x):
-        self._diff=x-self.ideal
+        self._diff=self.ideal-x
     
     def Proportial(self):
         response=self.kp*self._diff
@@ -31,19 +31,29 @@ class PID:
         return self.kd*data
 
     def PID(self,data):
-        response=[]
-        for x in data:
-            self.different(x)
-            response.append(self.Proportial()+self.Integral()+self.Diffentional())
-        return response
+        self.different(data)
+        return self.Proportial()+self.Integral()+self.Diffentional()
+        
 
-    def __call__(self,data):
-        return self.PID(data)
+    def __call__(self,firstInput):
+        return self.PID(firstInput)
 
 
 if __name__=="__main__":
-    data=[1.0,3.2,5.0,7.4,6.5,7.4,3.5,4.3,2.5]
+    countChallnge=[]
+    outputData=[]
+    x=np.random.rand()
     pid=PID()
-    for ideal in pid(data):
-        print("実測値：{}".format(ideal))
+    for i in range(100):
+        y=pid(x)
+        countChallnge.append(i)
+        outputData.append(pid(x))
+        print(y)
+        x=y
+    plt.plot(countChallnge,outputData)
+    plt.show()
+
+    
+       
+ 
 
